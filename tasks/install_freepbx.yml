@@ -1,0 +1,46 @@
+- name: Remove existing install source dir
+  file: "path={{ freepbx_srcdir }} state=absent"
+
+- name: Create install source dir
+  file: "path={{ freepbx_srcdir }} state=directory"
+
+- name: Download and extract FreePBX source
+  unarchive: "src={{ freepbx_url }} dest={{ freepbx_srcdir }} remote_src=yes extra_opts=--strip-components=1"
+  
+- name: Start asterisk
+  command: "./start_asterisk start chdir={{ freepbx_srcdir }}"
+
+- name: Install FreePBX
+  command: "./install --dbname={{ mysql_asterisk_db_name }} --cdrdbname={{ mysql_asteriskcdr_db_name }} --dbuser={{ mysql_asterisk_user }} --dbpass={{ mysql_asterisk_pass }} --user={{ asterisk_user }} --group={{ asterisk_group }} --webroot={{ freepbx_http_root }} -n chdir={{ freepbx_srcdir }}"
+
+- name: fwconsole chown
+  command: fwconsole chown
+
+- name: fwconsole reload
+  command: fwconsole reload
+
+- name: fwconsole ma upgrade framework
+  command: fwconsole ma upgrade framework
+
+- name: fwconsole restart
+  command: fwconsole restart  
+
+- name: Remove old init script
+  file: path=/etc/init.d/freepbx state=absent
+
+- name: Copy init script
+  command: "cp {{ freepbx_srcdir }}/amp_conf/etc/init.d/freepbx.init /etc/init.d/freepbx"
+  
+- name: Set file mode  
+  command: "chmod +x /etc/init.d/freepbx"
+
+- name: Change startup level
+  lineinfile: dest=/etc/init.d/freepbx regexp="^#!/usr/bin/env bash$" line="{{ freepbx_lsb_info }}" state=present
+
+- name: Fix func lib
+  lineinfile: dest=/etc/init.d/freepbx regexp="^. /etc/init.d/functions$" line=". /lib/lsb/init-functions" state=present
+
+- name: Enable FreePBX start at boot
+  service:
+    name: freepbx
+    enabled: yes

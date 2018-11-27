@@ -1,0 +1,7 @@
+- include_tasks: install_pkgs.yml
+- include_tasks: install_asterisk.yml
+- include_tasks: create_db.yml
+- include_tasks: install_odbc.yml
+- include_tasks: configure_odbc.yml
+- include_tasks: install.yml
+- include_tasks: install_freepbx.yml

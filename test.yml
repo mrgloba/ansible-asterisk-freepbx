@@ -1,0 +1,6 @@
+- name: Test install ntp
+  hosts: 10.10.10.19
+  vars_files:
+    - vars/main.yml
+  tasks:
+    - include_tasks: tasks/main.yml

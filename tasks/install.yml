@@ -1,0 +1,55 @@
+- name: Create Asterisk Group
+  group: "name={{ asterisk_group }} state=present"
+
+- name: Create Asterisk User
+  user: "name={{ asterisk_user }} comment='Asterisk process user' home={{ asterisk_user_home }} shell=/sbin/nologin group={{ asterisk_group }}"
+
+- name: Set ownership on important directories for the asterisk user
+  file: "path={{ item.path }} owner={{ asterisk_user }} group={{ asterisk_group }} recurse=yes"
+  with_items:
+    - { path: "/usr/lib64/asterisk/" }
+    - { path: "/var/lib/asterisk/" }
+    - { path: "/var/spool/asterisk/" }
+    - { path: "/var/log/asterisk/" }
+    - { path: "/var/run/asterisk/" }
+    - { path: "/etc/asterisk/" }
+    - { path: "/var/www/" }
+
+- name: Set user for asterisk process
+  lineinfile: dest=/etc/default/asterisk regexp="^#AST_USER=\"asterisk\"" line="AST_USER=\"{{ asterisk_user }}\"" state=present
+
+- name: Set group for asterisk process
+  lineinfile: dest=/etc/default/asterisk regexp="^#AST_GROUP=\"asterisk\"" line="AST_GROUP=\"{{ asterisk_group }}\"" state=present
+
+- name: Set user for apache2 process
+  lineinfile: dest=/etc/apache2/envvars regexp="^export APACHE_RUN_USER=.*$" line="export APACHE_RUN_USER={{ asterisk_user }}" state=present
+
+- name: Set group for apache2 process
+  lineinfile: dest=/etc/apache2/envvars regexp="^export APACHE_RUN_GROUP=.*$" line="export APACHE_RUN_GROUP={{ asterisk_group }}" state=present
+
+- name: Allow Override
+  replace: dest=/etc/apache2/apache2.conf regexp="(<[dD]irectory.*>[^<]*)AllowOverride None" replace="\1AllowOverride All"
+
+- name: enabled mod_rewrite
+  apache2_module: name=rewrite state=present  
+
+- name: enabled php5.6-fpm
+  apache2_module: name=php5.6-fpm state=present 
+
+- name: enabled proxy_fcgi
+  apache2_module: name=proxy_fcgi state=present
+
+- name: enabled setenvif
+  apache2_module: name=setenvif state=present
+
+- name: Remove existing http root
+  file: "path={{ freepbx_http_root }} state=absent"
+
+- name: Restart apache2
+  service: name="apache2" state=restarted
+
+- name: Change php.ini memory_limit
+  lineinfile: dest=/etc/php/5.6/apache2/php.ini regexp="memory_limit =" line="memory_limit = 256M" state=present
+
+- name: Change php.ini upload_max_filesize
+  lineinfile: dest=/etc/php/5.6/apache2/php.ini regexp="upload_max_filesize =" line="upload_max_filesize = 120M" state=present  

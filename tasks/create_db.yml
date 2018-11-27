@@ -1,0 +1,27 @@
+- name: Create astersik DB
+  mysql_db:
+    name: "{{ mysql_asterisk_db_name }}"
+    encoding: utf8
+    login_host: "{{ mysql_host }}"
+    login_password: "{{ mysql_root_pass }}"
+    login_user: "{{ mysql_root_user }}"
+    state: present
+
+- name: Create astersikcdrdb DB
+  mysql_db:
+    name: "{{ mysql_asteriskcdr_db_name }}"
+    encoding: utf8
+    login_host: "{{ mysql_host }}"
+    login_password: "{{ mysql_root_pass }}"
+    login_user: "{{ mysql_root_user }}"
+    state: present
+
+- name: Create sql user and grant privileges
+  mysql_user: 
+    name: "{{ mysql_asterisk_user }}"
+    password: "{{ mysql_asterisk_pass }}"
+    priv: "{{ mysql_asterisk_db_name }}.*:ALL/{{ mysql_asteriskcdr_db_name }}.*:ALL"
+    login_host: "{{ mysql_host }}"
+    login_password: "{{ mysql_root_pass }}"
+    login_user: "{{ mysql_root_user }}"
+    state: present

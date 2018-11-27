@@ -1,0 +1,108 @@
+- name: Install prerequests Stage 1
+  apt:
+    name:
+      - curl
+      - apt-transport-https
+      - net-tools
+    state: present
+
+- name: Add NodeJS 8.x repo Key
+  apt_key: url="https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+
+- name: Add NodeJS 8.x repo
+  apt_repository: 
+    repo: "deb https://deb.nodesource.com/node_8.x {{ ansible_distribution_release }} main"
+    filename: "nodesource"
+    state: present
+
+- name: Add NodeJS 8.x src repo
+  apt_repository: 
+    repo: "deb-src https://deb.nodesource.com/node_8.x {{ ansible_distribution_release }} main"
+    filename: "nodesource"
+    state: present    
+
+- name: Add PHP5.6 repo Key
+  apt_key: url="https://packages.sury.org/php/apt.gpg" state=present
+
+- name: Add PHP5.6 repository
+  apt_repository: 
+    repo: "deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main" 
+    filename: "deb.sury.org"
+    state: present
+    update_cache: Yes
+
+- name: Install prerequests Stage 2
+  apt:
+    name:
+      - build-essential 
+      - python-mysqldb
+      - linux-headers-{{ ansible_kernel }}
+      - openssh-server 
+      - apache2 
+      - bison 
+      - php5.6 
+      - php5.6-mbstring 
+      - php5.6-curl 
+      - php5.6-fpm 
+      - php5.6-cli 
+      - php5.6-mysql 
+      - php-pear 
+      - php5.6-gd 
+      - php5.6-odbc 
+      - sox 
+      - libncurses5-dev 
+      - libssl-dev 
+      - default-libmysqlclient-dev 
+      - mpg123 
+      - libxml2-dev 
+      - libnewt-dev 
+      - sqlite3 
+      - libsqlite3-dev 
+      - pkg-config 
+      - automake 
+      - libtool 
+      - autoconf 
+      - git 
+      - unixodbc-dev
+      - unixodbc
+      - odbcinst 
+      - uuid 
+      - uuid-dev 
+      - libasound2-dev 
+      - libogg-dev 
+      - libvorbis-dev 
+      - libicu-dev 
+      - libcurl4-openssl-dev 
+      - libical-dev 
+      - libneon27-dev 
+      - libsrtp0-dev 
+      - libspandsp-dev 
+      - libjansson-dev
+      - subversion 
+      - libtool-bin 
+      - python-dev 
+      - php5.6-xml 
+      - php5.6-gd 
+      - default-mysql-client 
+      - default-mysql-server 
+      - default-mysql-client-core 
+      - default-mysql-server-core 
+      - bison 
+      - flex 
+      - mongodb 
+      - dirmngr 
+      - php5.6-cgi 
+      - libapache2-mod-security2 
+      - libapache2-mod-php5.6
+      - nodejs
+      - aptitude 
+      - aptitude-common 
+      - libboost-iostreams1.62.0 
+      - libclass-accessor-perl 
+      - libcwidget3v5 
+      - libio-string-perl 
+      - libparse-debianchangelog-perl 
+      - libsigc++-2.0-0v5 
+      - libsub-name-perl
+      - cmake
+    state: present
