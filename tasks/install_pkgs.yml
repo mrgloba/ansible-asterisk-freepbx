@@ -36,7 +36,7 @@
     name:
       - build-essential 
       - python-mysqldb
-      - linux-headers-{{ ansible_kernel }}
+#      - linux-headers-{{ ansible_kernel }}
       - openssh-server 
       - apache2 
       - bison 
@@ -104,5 +104,6 @@
       - libparse-debianchangelog-perl 
       - libsigc++-2.0-0v5 
       - libsub-name-perl
+      - libsnmp-dev
       - cmake
     state: present

@@ -1,5 +1,5 @@
 - name: Test install ntp
-  hosts: 10.10.10.19
+  hosts: 192.168.103.4
   vars_files:
     - vars/main.yml
   tasks:
