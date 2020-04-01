@@ -5,7 +5,7 @@
   file: "path={{ odbc_install_srcdir }} state=directory"
 
 - name: ODBC | Clone MariaDB odbc connector src
-  git: 
+  git:
     repo: "{{ odbc_install_git_url }}"
     dest: "{{ odbc_install_srcdir }}"
     version: "{{ odbc_install_version }}"

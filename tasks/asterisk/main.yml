@@ -11,7 +11,7 @@
   command: "{{ item }} chdir={{ asterisk_install_srcdir }}"
   with_items:
     - contrib/scripts/get_mp3_source.sh
-    - ./configure --with-pjproject-bundled --with-jansson-bundled
+    - ./configure --with-pjproject-bundled --with-jansson-bundled --with-crypto --with-srtp
     - make menuselect.makeopts
     - menuselect/menuselect --enable chan_mobile --enable res_config_mysql --enable app_mysql --enable cdr_mysql menuselect.makeopts
     - menuselect/menuselect --enable app_macro --enable format_mp3 --enable app_flash --enable app_fax --enable app_jack --enable app_meetme --enable app_osplookup --enable app_setcallerid menuselect.makeopts

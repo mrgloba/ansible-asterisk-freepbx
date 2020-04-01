@@ -17,7 +17,7 @@
     state: present
 
 - name: Create sql user and grant privileges
-  mysql_user: 
+  mysql_user:
     name: "{{ asterisk_db_user }}"
     password: "{{ asterisk_db_pass }}"
     priv: "{{ asterisk_db_name }}.*:ALL/{{ asterisk_cdrdb_name }}.*:ALL"

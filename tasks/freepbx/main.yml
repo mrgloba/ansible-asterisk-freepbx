@@ -6,7 +6,7 @@
 
 - name: Download and extract FreePBX source
   unarchive: "src={{ freepbx_url }} dest={{ freepbx_srcdir }} remote_src=yes extra_opts=--strip-components=1"
-  
+
 - name: Start asterisk
   command: "./start_asterisk start chdir={{ freepbx_srcdir }}"
 
@@ -23,7 +23,7 @@
   command: fwconsole ma upgrade framework
 
 - name: fwconsole restart
-  command: fwconsole restart  
+  command: fwconsole restart
 
 - name: Install FreePBX systemd service unit
   copy: src=freepbx.service dest=/etc/systemd/system/

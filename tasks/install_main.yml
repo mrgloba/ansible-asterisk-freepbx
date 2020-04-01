@@ -31,10 +31,10 @@
   replace: dest=/etc/apache2/apache2.conf regexp="(<[dD]irectory.*>[^<]*)AllowOverride None" replace="\1AllowOverride All"
 
 - name: enabled mod_rewrite
-  apache2_module: name=rewrite state=present  
+  apache2_module: name=rewrite state=present
 
 - name: enabled mod-php7.3
-  apache2_module: name=php7.3 state=present 
+  apache2_module: name=php7.3 state=present
 
 - name: Remove existing http root
   file: "path={{ freepbx_http_root }} state=absent"
@@ -43,7 +43,7 @@
   lineinfile: dest=/etc/php/7.3/apache2/php.ini regexp="memory_limit =" line="memory_limit = 256M" state=present
 
 - name: Change php.ini upload_max_filesize
-  lineinfile: dest=/etc/php/7.3/apache2/php.ini regexp="upload_max_filesize =" line="upload_max_filesize = 120M" state=present  
+  lineinfile: dest=/etc/php/7.3/apache2/php.ini regexp="upload_max_filesize =" line="upload_max_filesize = 120M" state=present
 
 - name: Restart apache2
-  service: name="apache2" state=restarted  
+  service: name="apache2" state=restarted

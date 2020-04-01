@@ -1,10 +1,10 @@
 - name: configure INI for ODBC in /etc/odbcinst.ini
   ini_file:
-   dest: "/etc/odbcinst.ini"
-   section: "MariaDB"
-   create: true   
-   option: "{{ item.option }}"
-   value: "{{ item.value }}"
+    dest: "/etc/odbcinst.ini"
+    section: "MariaDB"
+    create: true
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
   with_items:
     - { option: "Description", value: "ODBC for MariaDB"}
     - { option: "Driver", value:  "{{ odbc_install_prefix }}/lib64/libmaodbc.so" }
@@ -13,11 +13,11 @@
 
 - name: configure INI for ODBC in /etc/odbc.ini
   ini_file:
-   dest: "/etc/odbc.ini"
-   section: "MySQL-{{ asterisk_cdrdb_name }}"
-   create: true   
-   option: "{{ item.option }}"
-   value: "{{ item.value }}"
+    dest: "/etc/odbc.ini"
+    section: "MySQL-{{ asterisk_cdrdb_name }}"
+    create: true
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
   with_items:
     - { option: "Description", value: "MySQL connection to {{ asterisk_cdrdb_name }} database" }
     - { option: "Driver", value: "MariaDB" }
