@@ -1,14 +1,10 @@
 ---
 # defaults file for ansible-asterisk-freepbx
-
 nodejs_upstream: true
 nodejs_upstream_version: 10
-
-
 odbc_install_srcdir: /usr/src/mariadb-connector-odbc
 odbc_install_version: 3.1.6
 odbc_install_prefix: /usr/local
-
 asterisk_db_name: asterisk
 asterisk_cdrdb_name: asteriskcdrdb
 asterisk_db_user: asterisk
@@ -18,15 +14,11 @@ asterisk_group: asterisk
 asterisk_user_home: /var/lib/asterisk
 asterisk_install_srcdir: /usr/src/ansible_asterisk/
 asterisk_version: 16
-
-
 mysql_host: localhost
 mysql_install: true
 mysql_root_user: root
 mysql_root_pass: ""
 mysql_socket: /var/run/mysqld/mysqld.sock
-
 freepbx_srcdir: /usr/src/ansible_freepbx
 freepbx_http_root: /var/www/html
 freepbx_install_ucp: false
-
