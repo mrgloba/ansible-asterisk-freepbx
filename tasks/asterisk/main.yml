@@ -1,0 +1,31 @@
+- name: Remove existing install source dir
+  file: "path={{ asterisk_install_srcdir }} state=absent"
+
+- name: Create install source dir
+  file: "path={{ asterisk_install_srcdir }} state=directory"
+
+- name: Download and extract Asterisk source
+  unarchive: "src={{ asterisk_install_url }} dest={{ asterisk_install_srcdir }} remote_src=yes extra_opts=--strip-components=1"
+
+- name: Build Asterisk from tarball
+  command: "{{ item }} chdir={{ asterisk_install_srcdir }}"
+  with_items:
+    - contrib/scripts/get_mp3_source.sh
+    - ./configure --with-pjproject-bundled --with-jansson-bundled
+    - make menuselect.makeopts
+    - menuselect/menuselect --enable chan_mobile --enable res_config_mysql --enable app_mysql --enable cdr_mysql menuselect.makeopts
+    - menuselect/menuselect --enable app_macro --enable format_mp3 --enable app_flash --enable app_fax --enable app_jack --enable app_meetme --enable app_osplookup --enable app_setcallerid menuselect.makeopts
+    - menuselect/menuselect --enable CORE-SOUNDS-EN-WAV --enable CORE-SOUNDS-EN-ULAW --enable CORE-SOUNDS-EN-ALAW --enable CORE-SOUNDS-EN-GSM --enable CORE-SOUNDS-EN-G729 --enable CORE-SOUNDS-RU-WAV --enable CORE-SOUNDS-RU-ULAW --enable CORE-SOUNDS-RU-ALAW --enable CORE-SOUNDS-RU-GSM --enable CORE-SOUNDS-RU-G729 menuselect.makeopts
+    - menuselect/menuselect --enable MOH-OPSOUND-WAV --enable MOH-OPSOUND-ULAW --enable MOH-OPSOUND-ALAW --enable MOH-OPSOUND-GSM --enable MOH-OPSOUND-G729 menuselect.makeopts
+    - menuselect/menuselect --enable EXTRA-SOUNDS-EN-WAV
+    - make -j2
+    - make uninstall-all
+    - make install
+    - make config
+    - make samples
+    - ldconfig
+
+- name: Disable asterisk start at boot
+  service:
+    name: asterisk
+    enabled: no

@@ -1,21 +1,6 @@
-mysql_asterisk_db_name: asterisk
-mysql_asteriskcdr_db_name: asteriskcdrdb
-mysql_root_user: root
-mysql_root_pass: ""
-mysql_asterisk_user: asterisk
-mysql_asterisk_pass: asteriskPassw0rd
-mysql_host: localhost
-asterisk_user: asterisk
-asterisk_group: asterisk
-asterisk_user_home: /var/lib/asterisk
-asterisk_srcdir: /usr/src/ansible_asterisk/
-asterisk_url: http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-13-current.tar.gz
-install_odbc_url: https://github.com/MariaDB/mariadb-connector-odbc.git
-install_odbc_version: 3.0.7
-install_odbc_prefix: /usr/local
-install_odbc_srcdir: /usr/src/mariadb-connector-odbc
-freepbx_srcdir: /usr/src/ansible_freepbx
-freepbx_url: http://mirror.freepbx.org/modules/packages/freepbx/freepbx-14.0-latest.tgz
-freepbx_http_root: /var/www/html
-freepbx_lsb_info: "#!/bin/sh\n### BEGIN INIT INFO\n# Provides:          freepbx\n# Required-Start:    $local_fs $remote_fs $network $syslog $named mysql\n# Required-Stop:     $local_fs $remote_fs $network $syslog $named mysql\n# Default-Start:     2 3 4 5\n# Default-Stop:      0 1 6\n# X-Interactive:     true\n# Short-Description: FreePBX server\n# Description:       Start the FreePBX server\n#  This script will start the FreePBX server.\n### END INIT INFO"
+---
 
+odbc_install_git_url: https://github.com/MariaDB/mariadb-connector-odbc.git
+asterisk_install_url: http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-{{ asterisk_version }}-current.tar.gz
+freepbx_url: http://mirror.freepbx.org/modules/packages/freepbx/freepbx-15.0-latest.tgz
+freepbx_lsb_info: "#!/bin/sh\n### BEGIN INIT INFO\n# Provides:          freepbx\n# Required-Start:    $local_fs $remote_fs $network $syslog $named mysql\n# Required-Stop:     $local_fs $remote_fs $network $syslog $named mysql\n# Default-Start:     2 3 4 5\n# Default-Stop:      0 1 6\n# X-Interactive:     true\n# Short-Description: FreePBX server\n# Description:       Start the FreePBX server\n#  This script will start the FreePBX server.\n### END INIT INFO"

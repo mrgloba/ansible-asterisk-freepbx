@@ -1,7 +1,25 @@
-- include_tasks: install_pkgs.yml
-- include_tasks: install_asterisk.yml
-- include_tasks: create_db.yml
-- include_tasks: install_odbc.yml
-- include_tasks: configure_odbc.yml
-- include_tasks: install.yml
-- include_tasks: install_freepbx.yml
+---
+
+- name: "Install requirements"
+  import_tasks: requirements.yml
+
+- name: Install NodeJS
+  import_tasks: nodejs/main.yml
+
+- name: Build and Install ODBC Connector
+  import_tasks: mariadb-odbc/main.yml
+
+- name: Build and Install Asterisk
+  import_tasks: asterisk/main.yml
+
+- name: Create database
+  import_tasks: createdb.yml
+
+- name: Setup ODBC Connector
+  import_tasks: configure_odbc.yml
+
+- name: Configure Apache2 and Asterisk Users and Groups
+  import_tasks: install_main.yml
+
+- name: Install FreePBX
+  import_tasks: freepbx/main.yml

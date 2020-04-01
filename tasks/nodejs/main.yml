@@ -1,0 +1,20 @@
+- name: Set facts
+  set_fact:
+    ansible_distribution_release: 'buster'
+  when: ansible_facts.distribution_major_version == "buster/sid"
+
+- name: Install NodeJS upstream repository
+  import_tasks: upstream.yml
+  when: nodejs_upstream
+
+- name: Install NodeJS
+  apt:
+    pkg: "nodejs"
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install NPM
+  apt:
+    pkg: "npm"
+    default_release: "{{ ansible_distribution_release if ansible_distribution_release != 'stretch' else 'stretch-backports' }}"
+  when: not nodejs_upstream

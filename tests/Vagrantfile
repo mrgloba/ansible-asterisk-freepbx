@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+@ansible_home = "/home/vagrant/.ansible"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "debian/buster64"
+
+  config.vm.synced_folder "../", "#{@ansible_home}/roles/ansible-asterisk-freepbx", type: 'rsync'
+
+  config.vm.provision "shell", inline: "chown vagrant:vagrant #{@ansible_home}"
+
+  config.vm.box_check_update = true
+
+  config.vm.network "forwarded_port", guest: 80, host: 8888
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    export DEBIAN_FRONTEND=noninteractive
+    sudo -E apt-get -qy update
+    sudo -E apt-get -qy -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" dist-upgrade
+    sudo -E apt-get -qy autoclean
+  SHELL
+
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = "test.yml"
+  end
+
+end

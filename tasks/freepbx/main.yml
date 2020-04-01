@@ -1,0 +1,41 @@
+- name: Remove existing install source dir
+  file: "path={{ freepbx_srcdir }} state=absent"
+
+- name: Create install source dir
+  file: "path={{ freepbx_srcdir }} state=directory"
+
+- name: Download and extract FreePBX source
+  unarchive: "src={{ freepbx_url }} dest={{ freepbx_srcdir }} remote_src=yes extra_opts=--strip-components=1"
+  
+- name: Start asterisk
+  command: "./start_asterisk start chdir={{ freepbx_srcdir }}"
+
+- name: Install FreePBX
+  command: "./install --dbname={{ asterisk_db_name }} --cdrdbname={{ asterisk_cdrdb_name }} --dbuser={{ asterisk_db_user }} --dbpass={{ asterisk_db_pass }} --user={{ asterisk_user }} --group={{ asterisk_group }} --webroot={{ freepbx_http_root }} -n chdir={{ freepbx_srcdir }}"
+
+- name: fwconsole chown
+  command: fwconsole chown
+
+- name: fwconsole reload
+  command: fwconsole reload
+
+- name: fwconsole ma upgrade framework
+  command: fwconsole ma upgrade framework
+
+- name: fwconsole restart
+  command: fwconsole restart  
+
+- name: Install FreePBX systemd service unit
+  copy: src=freepbx.service dest=/etc/systemd/system/
+
+- name: Enable FreePBX start at boot
+  service:
+    name: freepbx
+    enabled: yes
+
+- name: FreePBX install UCP
+  command: "fwconsole ma --edge downloadinstall ucp"
+  when: freepbx_install_ucp
+
+- name: FreepBX install modules ucp and pm2
+  command: "fwconsole ma downloadinstall pm2"

@@ -1,0 +1,18 @@
+- name: ODBC | Remove existing install source dir
+  file: "path={{ odbc_install_srcdir }} state=absent"
+
+- name: ODBC | Create install source dir
+  file: "path={{ odbc_install_srcdir }} state=directory"
+
+- name: ODBC | Clone MariaDB odbc connector src
+  git: 
+    repo: "{{ odbc_install_git_url }}"
+    dest: "{{ odbc_install_srcdir }}"
+    version: "{{ odbc_install_version }}"
+
+- name: ODBC | Build and install MariaDB odbc connector
+  command: "{{ item }} chdir={{ odbc_install_srcdir }}"
+  with_items:
+    - cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DWITH_OPENSSL=true -DCMAKE_INSTALL_PREFIX={{ odbc_install_prefix }} -LH
+    - make
+    - make install
