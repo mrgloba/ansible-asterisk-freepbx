@@ -22,3 +22,4 @@ mysql_socket: /var/run/mysqld/mysqld.sock
 freepbx_srcdir: /usr/src/ansible_freepbx
 freepbx_http_root: /var/www/html
 freepbx_install_ucp: false
+freepbx_version: 15

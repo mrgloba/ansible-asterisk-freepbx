@@ -70,6 +70,10 @@ TMP folder for sources
 
 Installs User Control Panel module
 
+	freepbx_version: 15
+
+Which version of FreePBX need to install. Currently support 14 an 15 only
+
 Dependencies
 ------------
 

@@ -12,17 +12,6 @@
       - bison
       - flex
       - apache2
-      - libapache2-mod-php
-      - php
-      - php-curl
-      - php-cli
-      - php-pdo
-      - php-mysql
-      - php-odbc
-      - php-pear
-      - php-gd
-      - php-mbstring
-      - php-intl
       - curl
       - sox
       - libncurses5-dev
@@ -74,3 +63,41 @@
     name:
       - mariadb-server
   when: mysql_install
+
+- name: Add PHP5.6 repo Key
+  apt_key: url="https://packages.sury.org/php/apt.gpg" state=present
+  when: freepbx_version == 14
+
+- name: Add PHP5.6 repository
+  apt_repository:
+    repo: "deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main"
+    filename: "deb.sury.org"
+    state: present
+    update_cache: Yes
+  when: freepbx_version == 14
+
+- name: Set PHP version
+  set_fact:
+    php_version: "5.6"
+  when: freepbx_version == 14
+
+- name: Set PHP version
+  set_fact:
+    php_version: "7.3"
+  when: freepbx_version != 14
+
+- name: Install PHP{{ php_version }} packages
+  apt:
+    name:
+      - php{{ php_version }}
+      - php{{ php_version }}-curl
+      - php{{ php_version }}-cli
+      - php{{ php_version }}-pdo
+      - php{{ php_version }}-mysql
+      - php{{ php_version }}-odbc
+      - php-pear
+      - php{{ php_version }}-gd
+      - php{{ php_version }}-mbstring
+      - php{{ php_version }}-intl
+      - php{{ php_version }}-xml
+      - libapache2-mod-php{{ php_version }}
