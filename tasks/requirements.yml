@@ -4,6 +4,7 @@
     name:
       - curl
       - policykit-1
+      - xmlstarlet
       - libmariadbclient-dev
       - apt-transport-https
       - net-tools

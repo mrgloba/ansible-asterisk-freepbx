@@ -21,9 +21,6 @@
 
 - name: fwconsole ma upgrade framework
   command: fwconsole ma upgrade framework
-
-- name: fwconsole a ma refreshsignatures
-  command: fwconsole a ma refreshsignatures
   
 - name: fwconsole restart
   command: fwconsole restart
