@@ -11,12 +11,7 @@
   command: "./start_asterisk start chdir={{ freepbx_srcdir }}"
 
 - name: Create HTTP root directory
-  file:
-    path: {{ freepbx_http_root }}
-    state: directory
-    mode: "0775"
-    owner: {{ asterisk_user }}
-    group: {{ asterisk_group }}
+  file: "path={{ freepbx_http_root }} state=directory mode=0775 owner={{ asterisk_user }} group={{ asterisk_group }}"
 
 - name: Install FreePBX
   command: "./install --dbname={{ asterisk_db_name }} --cdrdbname={{ asterisk_cdrdb_name }} --dbuser={{ asterisk_db_user }} --dbpass={{ asterisk_db_pass }} --user={{ asterisk_user }} --group={{ asterisk_group }} --webroot={{ freepbx_http_root }} -n chdir={{ freepbx_srcdir }}"
