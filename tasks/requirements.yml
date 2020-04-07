@@ -57,6 +57,9 @@
       - libmariadb-dev
       - python-mysqldb
       - libedit-dev
+      - libgmime-3.0-dev
+      - portaudio19-dev
+      - libiksemel-dev
     state: present
 
 - name: Install MariaDB Server

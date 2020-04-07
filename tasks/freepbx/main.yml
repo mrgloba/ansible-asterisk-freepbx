@@ -24,7 +24,7 @@
 
 - name: fwconsole ma upgrade framework
   command: fwconsole ma upgrade framework
-  
+
 - name: fwconsole restart
   command: fwconsole restart
 

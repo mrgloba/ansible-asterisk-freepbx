@@ -1,6 +1,19 @@
 ---
-
 - hosts: all
   become: True
+  vars:
+    asterisk_build_confopts:
+      - --with-pjproject-bundled 
+      - --with-jansson-bundled
+      - --with-crypto
+      - --with-srtp
+    asterisk_build_modules:
+      - format_mp3
+      - app_saycounted
+      - app_macro
+      - cdr_odbc
+      - cel_odbc
+      - codec_opus
+      - codec_g729a
   roles:
     - ansible-asterisk-freepbx
