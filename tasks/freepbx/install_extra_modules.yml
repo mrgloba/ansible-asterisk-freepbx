@@ -1,0 +1,5 @@
+---
+
+- name: Install custom modules
+  command: "fwconsole ma downloadinstall {{ item }}"
+  with_items: "{{ freepbx_extra_modules }}"
