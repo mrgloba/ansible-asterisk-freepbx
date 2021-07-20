@@ -28,24 +28,26 @@ freepbx_srcdir: /usr/src/ansible_freepbx
 freepbx_http_root: /var/www/html
 freepbx_install_ucp: false
 freepbx_version: 15
-freepbx_install_extra_modules: true
-freepbx_extra_modules:
-  - manager
-  - userman
-  - cel
-  - announcement
-  - calendar
-  - bulkhandler
-  - callforward
-  - callwaiting
-  - certman
-  - daynight
-  - donotdisturb
-  - fax
-  - findmefollow
-  - iaxsettings
-  - ivr
-  - pinsets
-  - queues
-  - ringgroups
-  - timeconditions
+freepbx_install_extra_modules: false
+freepbx_extra_modules: []
+## Example list modules:
+# freepbx_extra_modules:
+#   - manager
+#   - userman
+#   - cel
+#   - announcement
+#   - calendar
+#   - bulkhandler
+#   - callforward
+#   - callwaiting
+#   - certman
+#   - daynight
+#   - donotdisturb
+#   - fax
+#   - findmefollow
+#   - iaxsettings
+#   - ivr
+#   - pinsets
+#   - queues
+#   - ringgroups
+#   - timeconditions
