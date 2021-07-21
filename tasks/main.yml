@@ -1,5 +1,10 @@
 ---
 
+- name: Check if freepbx is installed
+  stat:
+    path: "/usr/sbin/fwconsole"
+  register: freepbx_is_installed
+
 - name: "Install requirements"
   import_tasks: requirements.yml
 
@@ -8,9 +13,11 @@
 
 - name: Build and Install ODBC Connector
   import_tasks: mariadb-odbc/main.yml
+  when: not freepbx_is_installed.stat.exists
 
 - name: Build and Install Asterisk
   import_tasks: asterisk/main.yml
+  when: not freepbx_is_installed.stat.exists
 
 - name: Create database
   import_tasks: createdb.yml
@@ -20,6 +27,8 @@
 
 - name: Configure Apache2 and Asterisk Users and Groups
   import_tasks: install_main.yml
+  when: not freepbx_is_installed.stat.exists
 
 - name: Install FreePBX
   import_tasks: freepbx/main.yml
+  when: not freepbx_is_installed.stat.exists
