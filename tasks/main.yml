@@ -23,3 +23,7 @@
 
 - name: Install FreePBX
   import_tasks: freepbx/main.yml
+
+- name: Install custom modules
+  import_tasks: freepbx/install_extra_modules.yml
+  when: freepbx_install_extra_modules
