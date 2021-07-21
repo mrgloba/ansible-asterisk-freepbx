@@ -74,6 +74,11 @@ Installs User Control Panel module
 
 Which version of FreePBX need to install. Currently support 14 an 15 only
 
+	freepbx_install_extra_modules: false
+	freepbx_extra_modules: []
+
+Install additional modules
+
 Dependencies
 ------------
 
